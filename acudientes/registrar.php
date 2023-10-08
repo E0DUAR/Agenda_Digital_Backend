@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         )");
 
     mysqli_query($link, "INSERT INTO usuarios (email,password,rol,estado) 
-    VALUES ('$params->email',SHA1('$params->identificacion'),'acudiente','A')");
+    VALUES ('$params->email','$params->identificacion','acudiente','A')");
 
 
     echo json_encode(array('result' => 'OK'));

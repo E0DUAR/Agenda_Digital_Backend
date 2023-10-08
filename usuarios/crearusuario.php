@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $params = json_decode($json);
 
     mysqli_query($link, "INSERT INTO usuarios (email,password,rol,estado) 
-        VALUES ('$params->email',SHA1('$params->password'),'$params->rol','A')");
+        VALUES ('$params->email','$params->password','$params->rol','A')");
 
     echo json_encode(array('result' => 'OK'));
 }
