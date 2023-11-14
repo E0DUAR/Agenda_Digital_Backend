@@ -25,7 +25,6 @@
     }
 
 
-
     $registros = mysqli_query($con, $query);
     
     $vec=array();
