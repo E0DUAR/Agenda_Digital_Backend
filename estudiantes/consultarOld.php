@@ -1,7 +1,4 @@
 <?php
-
-    
-
     header('Access-Control-Allow-Origin: *');
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
     header('Content-Type: application/json');
@@ -12,13 +9,8 @@
     $curso = $_GET['curso'];
     $grupo = $_GET['grupo'];
     $estado = $_GET['estado'];
-    $acudiente = $_GET['acudiente'];
-    
 
-        $query = "SELECT e.* FROM estudiantes e 
-        LEFT JOIN acudientes a ON e.id = a.idestudiante
-        WHERE 1 = 1";
-
+    $query = "SELECT * FROM estudiantes WHERE 1 = 1";
 
     if ($curso !== 'all') {
         $query .= " AND curso = '$curso'";
@@ -32,10 +24,6 @@
         $query .= " AND estado = '$estado'";
     }
 
-    if($acudiente !== 'all') {
-        $query .= " AND (a.email = '$acudiente' OR a.email IS NULL)";
-    }
-
 
     $registros = mysqli_query($con, $query);
     
@@ -45,16 +33,3 @@
     }
 
     echo json_encode($vec);
-
-
-
-    function exportarAExcel($vec) {
-        
-    }
-
-    if(isset($_POST["export_data"])) {
-        exportar($vec);
-     } else {
-         header('Content-Type: application/json');
-         echo json_encode($vec);
-     }

@@ -14,6 +14,32 @@ function retornarConexion() {
   }
 }
 
+// Filter the excel data
+function filterData(&$str){
+  $str = str_replace("/\t/", "\\t", $str);
+  $str = str_replace("/\r?\n/", "\\n", $str);
+  if(strstr($str, '"')){ $str = '"' . str_replace('"', '""', $str) . '"'; }
+}
+
+function exportar($rows) {
+  if(!empty($rows)){
+    $filename = "reporte_".date('Y-m-d').".xls";
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=".$filename);
+    $mostrar_columnas = false;
+    foreach($rows as $row) {
+        if(!$mostrar_columnas) {
+            echo implode("\t", array_keys($row))."\n";
+            $mostrar_columnas = true;
+        }
+        array_walk($row,'filterData');
+        echo implode("\t", array_values($row))."\n";
+    }
+  }else{
+      echo 'No hay datos para exportar';
+  }
+}
+
 // Ejemplo de uso
 $conexion = retornarConexion();
 
@@ -25,17 +51,4 @@ if ($conexion === false) {
 
 
 
-
-
-
-
-
-
-
-
-/*function retornarConexion() {
-  $con=mysqli_connect("localhost","root","","agenda");
-  return $con;
-}
-?>*/
 ?>
